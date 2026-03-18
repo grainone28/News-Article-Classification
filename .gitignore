@@ -201,6 +201,9 @@ cython_debug/
 .cursorignore
 .cursorindexingignore
 
+# Dataset files (not included due to size/licensing)
+*.csv
+
 # Marimo
 marimo/_static/
 marimo/_lsp/
