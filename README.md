@@ -74,28 +74,6 @@ The following models were evaluated during the experimentation phase:
 
 Model comparison was performed using stratified cross-validation and **macro F1-score** as the main evaluation metric.
 
-## Figures
-
-Some of the most relevant figures produced during the evaluation stage are shown below.
-
-### Label distribution
-
-![Label Distribution](docs/label_distribution.png)
-
-### Confusion matrix
-
-![Confusion Matrix](docs/confusion_matrix.png)
-
-### LinearSVC tuning
-
-![C Parameter Tuning](docs/c_parameter_tuning.png)
-
-### TF-IDF vocabulary size impact
-
-![Vocabulary Size Comparison](docs/vocab_size_comparison.png)
-
-GitHub supports relative image paths in Markdown, so keeping the figures in `docs/` is a clean and portable solution for repository documentation.
-
 ## Installation
 
 Clone the repository and install the required packages:
