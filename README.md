@@ -1,28 +1,145 @@
-# News Article Categorization via Linear SVC
+# News Article Classification
 
-##  Authors
-* **Davide D'Amico** (s353778) - [Politecnico di Torino]
-* **Gerardo Rainone** (s354059) - [Politecnico di Torino]
+This repository contains a machine learning project for automatic **news article classification**, developed for the **Data Science and Machine Learning Lab** course at the **Politecnico di Torino**, carried out by **Davide D'Amico** and **Gerardo Rainone** as part of the **first year of the Master's degree in Data Science and Engineering**, during the **2025/2026 academic year**.
 
-##  Overview
-This project implements an automated system to classify news articles into seven distinct categories (Business, Technology, Sports, etc.). By leveraging Natural Language Processing (NLP) and supervised learning, the model identifies the topic of an article based on its title, content, and available metadata.
+## Overview
 
-##  Technical Pipeline
-The project follows a standard Data Science workflow:
-1. **Feature Engineering**: Combined title and article body into a single text feature.
-2. **Preprocessing**: Utilized `TfidfVectorizer` with n-gram ranges (1, 2) and English stop-word removal to convert text into high-dimensional sparse vectors.
-3. **Metadata Integration**: Incorporated categorical features (Source) via One-Hot Encoding and numerical features (Page Rank) via Standard Scaling.
-4. **Model Selection**: Evaluated various classifiers, selecting **Linear Support Vector Classification (LinearSVC)** for its efficiency with high-dimensional text data.
+The goal of the project is to classify news articles using both textual and metadata-based features. The pipeline combines:
+- article title and body text,
+- source information,
+- page rank,
+- TF-IDF vectorization,
+- classical machine learning models for supervised classification.
 
-##  Performance
-The optimized model achieves a **Macro F1-score of 0.72**. 
-* Detailed methodology and hyperparameter tuning results are available in the [Technical Report](./Report.pdf).
+The project includes:
+- exploratory analysis and model comparison,
+- hyperparameter tuning with cross-validation,
+- final model training,
+- prediction generation for the evaluation set.
 
-##  Repository Structure
-* `main.py`: Production-ready classification pipeline.
-* `script.py`: Exploratory analysis and model benchmarking scripts.
-* `Report_DAmico_Rainone.pdf`: Comprehensive project documentation.
-* `requirements.txt`: Environment dependencies.
+## Repository Structure
 
-##  Data Availability Note
-The dataset files (`development.csv` and `evaluation.csv`) are **not included** in this repository. These files are restricted educational materials provided by the professors at Politecnico di Torino. To run the code, the original datasets must be placed in the project's root directory.
+```text
+news-article-classification/
+├── README.md
+├── requirements.txt
+├── .gitignore
+├── LICENSE
+├── data/
+│   ├── development.csv
+│   ├── evaluation.csv
+│   └── README.md
+├── docs/
+│   ├── report.pdf
+│   ├── label_distribution.png
+│   ├── confusion_matrix.png
+│   ├── c_parameter_tuning.png
+│   └── vocab_size_comparison.png
+└── src/
+    ├── __init__.py
+    ├── config.py
+    ├── utils.py
+    ├── evaluate.py
+    └── train_and_predict.py
+```
+
+## Dataset
+
+The dataset used in this project was provided by the course instructor and is **not publicly available**. For this reason, the CSV files are stored locally in the `data/` folder and excluded from version control through `.gitignore`.
+
+Expected files:
+- `data/development.csv`: labeled dataset used for training, validation, and model selection
+- `data/evaluation.csv`: unlabeled dataset used to generate final predictions
+
+## Methodology
+
+The project follows a standard supervised machine learning workflow:
+1. Data loading and preprocessing
+2. Text feature construction from title and article body
+3. TF-IDF vectorization of text
+4. One-hot encoding of categorical metadata (`source`)
+5. Standardization of numerical metadata (`page_rank`)
+6. Model comparison across multiple classifiers
+7. Hyperparameter tuning using `GridSearchCV`
+8. Final training and prediction on the evaluation set.
+
+The main model used in the final pipeline is **LinearSVC**, combined with a `ColumnTransformer` preprocessing pipeline for text, categorical, and numerical features.
+
+## Models Evaluated
+
+The following models were evaluated during the experimentation phase:
+- LinearSVC
+- K-Nearest Neighbors
+- Decision Tree Classifier
+
+Model comparison was performed using stratified cross-validation and **macro F1-score** as the main evaluation metric.
+
+## Figures
+
+Some of the most relevant figures produced during the evaluation stage are shown below.
+
+### Label distribution
+
+![Label Distribution](docs/label_distribution.png)
+
+### Confusion matrix
+
+![Confusion Matrix](docs/confusion_matrix.png)
+
+### LinearSVC tuning
+
+![C Parameter Tuning](docs/c_parameter_tuning.png)
+
+### TF-IDF vocabulary size impact
+
+![Vocabulary Size Comparison](docs/vocab_size_comparison.png)
+
+GitHub supports relative image paths in Markdown, so keeping the figures in `docs/` is a clean and portable solution for repository documentation.
+
+## Installation
+
+Clone the repository and install the required packages:
+
+```bash
+git clone <your-repository-url>
+cd news-article-classification
+pip install -r requirements.txt
+```
+
+## Usage
+
+Run the evaluation script to:
+- inspect the dataset,
+- benchmark multiple models,
+- tune hyperparameters,
+- generate plots for the report and README.
+
+```bash
+python -m src.evaluate
+```
+
+Run the final training and prediction script to train the selected model on the development set and generate the final submission file:
+
+```bash
+python -m src.train_and_predict
+```
+
+## Output
+
+The project generates:
+- evaluation metrics on a hold-out validation split,
+- plots for analysis and reporting,
+- a `submission.csv` file for final predictions.
+
+The submission file is excluded from version control through `.gitignore`.
+
+## Authors
+
+- **Davide D'Amico**
+- **Gerardo Rainone**
+
+## Notes
+
+- The dataset is not included in the repository.
+- The `src/` folder is organized as a Python package, so the empty `__init__.py` file is intentionally kept.
+- Relative paths in the README are used to display project figures directly on GitHub.
